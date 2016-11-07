@@ -12,7 +12,6 @@
 #include <pthread.h>
 #include <string.h>
 
-#define LISTENQ 10
 #define MAXDATASIZE 100
 void* connection_handler(void* socket_desc);
 
@@ -22,6 +21,11 @@ int main (int argc, char **argv) {
     char   buf[MAXDATASIZE];
     char   str[INET_ADDRSTRLEN];
     time_t ticks;
+    
+    if (argc != 2) {
+        perror("wrong amount of arguments");
+        exit(1);
+    }
     
     // Começa a escutar o socket para a conexao
     if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
@@ -42,7 +46,7 @@ int main (int argc, char **argv) {
     }
     
     // Escuta o socket da conexao e trata o erro
-    if (listen(listenfd, LISTENQ) == -1) {
+    if (listen(listenfd, atoi(argv[1])) == -1) {
         perror("listen");
         exit(1);
     }
