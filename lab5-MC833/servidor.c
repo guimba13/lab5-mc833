@@ -177,7 +177,8 @@ void *connection_handler(void* socket_desc) {
     {
         perror("recv failed");
     }
-    
+
+    sleep(20);
     // Fecha a conexao com o servidor
     free(socket_desc);
     
