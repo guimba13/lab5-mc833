@@ -44,12 +44,15 @@ int main (int argc, char **argv) {
         perror("bind");
         exit(1);
     }
-    
+    int backlog = atoi(argv[1]);
+    printf("backlog: %d\n", backlog);
     // Escuta o socket da conexao e trata o erro
-    if (listen(listenfd, atoi(argv[1])) == -1) {
+    if (listen(listenfd, backlog) == -1) {
         perror("listen");
         exit(1);
     }
+    
+    sleep(60);
     
     // Mantem o servidor rodando infinitamente
     for ( ; ; ) {
@@ -177,8 +180,6 @@ void *connection_handler(void* socket_desc) {
     {
         perror("recv failed");
     }
-
-    sleep(20);
     // Fecha a conexao com o servidor
     free(socket_desc);
     
